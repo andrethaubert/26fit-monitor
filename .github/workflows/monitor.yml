@@ -1,0 +1,30 @@
+# Agenda notificações (GitHub Actions = runner na nuvem, não seu PC ligado).
+
+name: 26fit monitor
+
+on:
+  schedule:
+    # A cada 3 minutos (UTC). Execuções agendadas podem atrasar alguns minutos no GitHub.
+    - cron: "*/3 * * * *"
+  workflow_dispatch: # botão "Run workflow" manual
+
+env:
+  OCCUPANCY_BRANCH_ID: "4"
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r requirements.txt
+
+      - name: Executar monitor
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          OCCUPANCY_BRANCH_ID: ${{ env.OCCUPANCY_BRANCH_ID }}
+        run: python monitor.py
