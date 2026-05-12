@@ -1,12 +1,10 @@
-# Agenda notificações (GitHub Actions = runner na nuvem, não seu PC ligado).
-
 name: 26fit monitor
 
 on:
+  workflow_dispatch:
+  push:
   schedule:
-    # A cada 3 minutos (UTC). Execuções agendadas podem atrasar alguns minutos no GitHub.
     - cron: "* * * * *"
-  workflow_dispatch: # botão "Run workflow" manual
 
 env:
   OCCUPANCY_BRANCH_ID: "4"
@@ -14,6 +12,7 @@ env:
 jobs:
   notify:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
