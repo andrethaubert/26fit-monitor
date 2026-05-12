@@ -5,7 +5,7 @@ name: 26fit monitor
 on:
   schedule:
     # A cada 3 minutos (UTC). Execuções agendadas podem atrasar alguns minutos no GitHub.
-    - cron: "*/3 * * * *"
+    - cron: "* * * * *"
   workflow_dispatch: # botão "Run workflow" manual
 
 env:
